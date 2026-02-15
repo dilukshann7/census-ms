@@ -94,12 +94,37 @@ export const accountRelations = relations(account, ({ one }) => ({
 
 export const family = pgTable('family', {
   id: serial('id').primaryKey(),
-  name: text('name').notNull(),
+  gsDivision: text('gs_division').notNull(),
+  village: text('village').notNull(),
+  address: text('address').notNull(),
+  samurdhiPayment: integer('samurdhi_payment').notNull(),
+  eldersPayment: integer('elders_payment').notNull(),
+  diseasePayment: integer('disease_payment').notNull(),
+  monthlyPayment: integer('monthly_payment').notNull(),
+  whatsappNumber: text('whatsapp_number').notNull(),
+  houseLength: integer('house_length').notNull(),
+  houseWidth: integer('house_width').notNull(),
+  landLength: integer('land_length').notNull(),
+  landWidth: integer('land_width').notNull(),
+  landSize: text('land_size').notNull(),
+  specialNeedsMemberDetails: text('special_needs_member_details').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
 });
 
 export const person = pgTable('person', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
+  nicNumber: text('nic_number').notNull(),
+  relationship: text('relationship').notNull(),
+  gender: text('gender').notNull(),
+  dateOfBirth: timestamp('date_of_birth').notNull(),
+  educationLevel: text('education_level').notNull(),
+  occupation: text('occupation').notNull(),
+  telephoneNumber: text('telephone_number').notNull(),
   familyId: integer('family_id')
 	.references(() => family.id)
 	.notNull(),
