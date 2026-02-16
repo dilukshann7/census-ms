@@ -113,6 +113,7 @@ export const family = pgTable('family', {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+  status: text('status').notNull(),
 });
 
 export const person = pgTable('person', {
@@ -128,4 +129,21 @@ export const person = pgTable('person', {
   familyId: integer('family_id')
 	.references(() => family.id)
 	.notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+  status: text('status').notNull(),
 });
+
+export const familyRelations = relations(family, ({ many }) => ({
+  persons: many(person),
+}));
+
+export const personRelations = relations(person, ({ one }) => ({
+  family: one(family, {
+    fields: [person.familyId],
+    references: [family.id],
+  }),
+}));
