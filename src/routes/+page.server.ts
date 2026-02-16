@@ -27,6 +27,7 @@ export const actions: Actions = {
 				.values({
 					...familyData,
 					landSize: `${landSizeValue} ${landSizeUnit}`,
+					status: "Pending",
 				})
 				.returning({ id: family.id });
 
@@ -38,6 +39,7 @@ export const actions: Actions = {
 							...personData,
 							dateOfBirth: new Date(p.dateOfBirth),
 							familyId: insertedFamily.id,
+							status: "Pending",
 						};
 					})
 				);
