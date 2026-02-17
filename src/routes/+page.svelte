@@ -5,6 +5,7 @@
     import * as Card from "$lib/components/ui/card/index.js";
     import { Button } from "$lib/components/ui/button/index.js";
     import { Separator } from "$lib/components/ui/separator/index.js";
+    import * as Select from "$lib/components/ui/select/index.js";
     import {
         FamilyInfoSection,
         PaymentInfoSection,
@@ -17,6 +18,7 @@
     import Moon from "@lucide/svelte/icons/moon";
     import { toggleMode, mode } from "mode-watcher";
     import { toast } from "svelte-sonner";
+    import { t, locale, locales } from "$lib/i18n";
 
     let { data } = $props();
 
@@ -43,10 +45,14 @@
     });
 
     const { enhance, delayed } = form;
+
+    function getLanguageLabel(code: string) {
+        return locales.find((l) => l.code === code)?.label ?? "English";
+    }
 </script>
 
 <svelte:head>
-    <title>Census Data Entry — Census Management System</title>
+    <title>{$t("header.title")} — Census Management System</title>
     <meta
         name="description"
         content="Enter family census data including household details, payment information, property measurements, and family member records."
@@ -58,34 +64,58 @@
         class="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50"
     >
         <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between gap-4"
+            >
+                <div class="flex items-center gap-3 text-center sm:text-left">
                     <div>
-                        <h1 class="text-xl font-bold tracking-tight">
-                            Census Data Entry
+                        <h1 class="text-lg sm:text-xl font-bold tracking-tight">
+                            {$t("header.title")}
                         </h1>
-                        <p class="text-sm text-muted-foreground">
-                            Family & household information form
+                        <p
+                            class="text-sm text-muted-foreground hidden sm:block"
+                        >
+                            {$t("header.subtitle")}
                         </p>
                     </div>
                 </div>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onclick={toggleMode}
-                    class="rounded-full"
-                    aria-label="Toggle dark mode"
+                <div
+                    class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end"
                 >
-                    {#if mode.current === "dark"}
-                        <Sun
-                            class="size-5 transition-transform duration-300 rotate-0"
-                        />
-                    {:else}
-                        <Moon
-                            class="size-5 transition-transform duration-300 rotate-0"
-                        />
-                    {/if}
-                </Button>
+                    <Select.Root
+                        type="single"
+                        bind:value={$locale}
+                        onValueChange={(v) => locale.set(v)}
+                    >
+                        <Select.Trigger class="w-[140px] sm:w-[120px]">
+                            {getLanguageLabel($locale)}
+                        </Select.Trigger>
+                        <Select.Content>
+                            {#each locales as l}
+                                <Select.Item value={l.code} label={l.label}>
+                                    {l.label}
+                                </Select.Item>
+                            {/each}
+                        </Select.Content>
+                    </Select.Root>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onclick={toggleMode}
+                        class="rounded-full"
+                        aria-label="Toggle dark mode"
+                    >
+                        {#if mode.current === "dark"}
+                            <Sun
+                                class="size-5 transition-transform duration-300 rotate-0"
+                            />
+                        {:else}
+                            <Moon
+                                class="size-5 transition-transform duration-300 rotate-0"
+                            />
+                        {/if}
+                    </Button>
+                </div>
             </div>
         </div>
     </header>
