@@ -2,7 +2,7 @@ import { json } from "@sveltejs/kit";
 import { z } from "zod";
 import { auth } from "$lib/auth";
 import { hasAdminAllowList, isAdminEmail } from "$lib/server/admin-auth";
-import type { RequestHandler } from "./$types";
+import type { RequestHandler } from "@sveltejs/kit";
 
 const signupSchema = z.object({
 	name: z.string().trim().min(1).max(100),
@@ -10,7 +10,7 @@ const signupSchema = z.object({
 	password: z.string().min(8).max(128),
 });
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }: { request: Request }) => {
 	if (!hasAdminAllowList()) {
 		return json(
 			{

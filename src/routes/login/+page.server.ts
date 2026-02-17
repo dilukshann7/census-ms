@@ -26,7 +26,7 @@ const getUserEmailFromIdentifier = async (identifier: string) => {
 	return matchedUser?.email ?? null;
 };
 
-export const load: PageServerLoad = async ({ request, url }) => {
+export const load: PageServerLoad = async ({ request, url }: { request: Request, url: URL }) => {
 	const redirectTo = resolveAdminRedirect(url.searchParams.get("redirectTo"));
 	const allowListIsConfigured = hasAdminAllowList();
 	const session = await auth.api.getSession({
@@ -50,7 +50,7 @@ export const load: PageServerLoad = async ({ request, url }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request }) => {
+	default: async ({ request }: { request: Request }) => {
 		const data = await request.formData();
 		const username = String(data.get("username") ?? "").trim();
 		const password = String(data.get("password") ?? "");
