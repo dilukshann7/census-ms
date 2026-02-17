@@ -3,6 +3,7 @@
     import { Input } from "$lib/components/ui/input/index.js";
     import type { SuperForm } from "sveltekit-superforms";
     import type { FamilyFormData } from "$lib/schema";
+    import { t } from "$lib/i18n";
 
     let { form }: { form: SuperForm<FamilyFormData> } = $props();
     const { form: formData } = form;
@@ -11,10 +12,10 @@
 <div class="space-y-6">
     <div class="mb-6">
         <h2 class="text-lg font-semibold tracking-tight">
-            Payment Information
+            {$t("sections.payment")}
         </h2>
         <p class="text-sm text-muted-foreground">
-            Monthly payment and subsidy details
+            {$t("sections.payment_desc")}
         </p>
     </div>
 
@@ -23,11 +24,11 @@
             {#snippet children({ constraints })}
                 <Form.Control>
                     {#snippet children({ props })}
-                        <Form.Label>Samurdhi Payment</Form.Label>
+                        <Form.Label>{$t("fields.samurdhi")}</Form.Label>
                         <div class="relative">
                             <span
                                 class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
-                                >Rs.</span
+                                >{$t("common.rs")}</span
                             >
                             <Input
                                 {...props}
@@ -48,11 +49,11 @@
             {#snippet children({ constraints })}
                 <Form.Control>
                     {#snippet children({ props })}
-                        <Form.Label>Elders Payment</Form.Label>
+                        <Form.Label>{$t("fields.elders")}</Form.Label>
                         <div class="relative">
                             <span
                                 class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
-                                >Rs.</span
+                                >{$t("common.rs")}</span
                             >
                             <Input
                                 {...props}
@@ -73,11 +74,11 @@
             {#snippet children({ constraints })}
                 <Form.Control>
                     {#snippet children({ props })}
-                        <Form.Label>Disease Payment</Form.Label>
+                        <Form.Label>{$t("fields.disease")}</Form.Label>
                         <div class="relative">
                             <span
                                 class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
-                                >Rs.</span
+                                >{$t("common.rs")}</span
                             >
                             <Input
                                 {...props}
@@ -98,11 +99,11 @@
             {#snippet children({ constraints })}
                 <Form.Control>
                     {#snippet children({ props })}
-                        <Form.Label>Monthly Payment</Form.Label>
+                        <Form.Label>{$t("fields.monthly")}</Form.Label>
                         <div class="relative">
                             <span
                                 class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
-                                >Rs.</span
+                                >{$t("common.rs")}</span
                             >
                             <Input
                                 {...props}
