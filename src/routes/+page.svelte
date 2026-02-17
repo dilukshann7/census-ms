@@ -152,7 +152,7 @@
                 class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-12"
             >
                 <p class="text-sm text-muted-foreground">
-                    Please review all sections before submitting.
+                    {$t("common.review_msg")}
                 </p>
                 <Button
                     type="submit"
@@ -162,10 +162,10 @@
                 >
                     {#if $delayed}
                         <Loader2 class="size-4 animate-spin" />
-                        Submitting...
+                        {$t("common.submitting")}
                     {:else}
                         <CheckCircle class="size-4" />
-                        Submit Census Data
+                        {$t("common.submit_btn")}
                     {/if}
                 </Button>
             </div>
