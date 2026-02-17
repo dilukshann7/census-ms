@@ -4,6 +4,7 @@
     import { Textarea } from "$lib/components/ui/textarea/index.js";
     import type { SuperForm } from "sveltekit-superforms";
     import type { FamilyFormData } from "$lib/schema";
+    import { t } from "$lib/i18n";
 
     let { form }: { form: SuperForm<FamilyFormData> } = $props();
     const { form: formData } = form;
@@ -11,9 +12,11 @@
 
 <div class="space-y-6">
     <div class="mb-6">
-        <h2 class="text-lg font-semibold tracking-tight">Location Details</h2>
+        <h2 class="text-lg font-semibold tracking-tight">
+            {$t("sections.location")}
+        </h2>
         <p class="text-sm text-muted-foreground">
-            GS Division, village, and address information
+            {$t("sections.location_desc")}
         </p>
     </div>
 
@@ -22,12 +25,12 @@
             {#snippet children({ constraints })}
                 <Form.Control>
                     {#snippet children({ props })}
-                        <Form.Label>GS Division</Form.Label>
+                        <Form.Label>{$t("fields.gs_division")}</Form.Label>
                         <Input
                             {...props}
                             {...constraints}
                             bind:value={$formData.gsDivision}
-                            placeholder="Enter GS Division"
+                            placeholder={$t("fields.gs_division_placeholder")}
                         />
                     {/snippet}
                 </Form.Control>
@@ -39,12 +42,12 @@
             {#snippet children({ constraints })}
                 <Form.Control>
                     {#snippet children({ props })}
-                        <Form.Label>Village</Form.Label>
+                        <Form.Label>{$t("fields.village")}</Form.Label>
                         <Input
                             {...props}
                             {...constraints}
                             bind:value={$formData.village}
-                            placeholder="Enter village name"
+                            placeholder={$t("fields.village_placeholder")}
                         />
                     {/snippet}
                 </Form.Control>
@@ -57,12 +60,12 @@
         {#snippet children({ constraints })}
             <Form.Control>
                 {#snippet children({ props })}
-                    <Form.Label>Address</Form.Label>
+                    <Form.Label>{$t("fields.address")}</Form.Label>
                     <Textarea
                         {...props}
                         {...constraints}
                         bind:value={$formData.address}
-                        placeholder="Enter full address"
+                        placeholder={$t("fields.address_placeholder")}
                         rows={3}
                     />
                 {/snippet}
@@ -75,7 +78,7 @@
         {#snippet children({ constraints })}
             <Form.Control>
                 {#snippet children({ props })}
-                    <Form.Label>WhatsApp Number</Form.Label>
+                    <Form.Label>{$t("fields.whatsapp")}</Form.Label>
                     <Input
                         {...props}
                         {...constraints}
@@ -85,9 +88,6 @@
                     />
                 {/snippet}
             </Form.Control>
-            <Form.Description
-                >Include country code for WhatsApp contact</Form.Description
-            >
             <Form.FieldErrors />
         {/snippet}
     </Form.Field>
