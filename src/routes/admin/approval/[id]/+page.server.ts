@@ -20,7 +20,6 @@ export const load: PageServerLoad = async ({ params }) => {
 		throw error(404, 'Family not found');
 	}
 
-	// Transform data to match schema
 	const landSizeParts = familyData.landSize.split(' ');
 	const landSizeValue = parseFloat(landSizeParts[0]);
 	const landSizeUnit = landSizeParts.slice(1).join(' ') || 'Perch';
@@ -56,7 +55,6 @@ export const actions: Actions = {
 			const { persons, landSizeValue, landSizeUnit, ...familyData } = form.data;
 			const familyId = Number(params.id);
 
-			// Update family
 			await db.update(family)
 				.set({
 					...familyData,
@@ -64,30 +62,24 @@ export const actions: Actions = {
 				})
 				.where(eq(family.id, familyId));
 
-			// Handle persons
-			// 1. Get existing IDs
 			const existingPersons = await db.query.person.findMany({
 				where: eq(person.familyId, familyId),
 				columns: { id: true }
 			});
 			const existingIds = existingPersons.map(p => p.id);
 			
-			// 2. Identify entries to update, insert, delete
 			const submittedIds = persons.map(p => p._id).filter((id): id is number => id !== undefined);
 			const toDelete = existingIds.filter(id => !submittedIds.includes(id));
 			
-			// Delete removed persons
 			if (toDelete.length > 0) {
 				await db.delete(person).where(inArray(person.id, toDelete));
 			}
 
-			// Upsert persons
 			for (const p of persons) {
 				const { _id, ...personData } = p;
 				const dob = new Date(p.dateOfBirth);
 
 				if (_id) {
-					// Update
 					await db.update(person)
 						.set({
 							...personData,
@@ -95,12 +87,11 @@ export const actions: Actions = {
 						})
 						.where(eq(person.id, _id));
 				} else {
-					// Insert
 					await db.insert(person).values({
 						...personData,
 						dateOfBirth: dob,
 						familyId: familyId,
-						status: 'Pending' // Inherit or default
+						status: 'Pending' 
 					});
 				}
 			}
@@ -115,7 +106,6 @@ export const actions: Actions = {
 	approve: async ({ params }) => {
 		const id = Number(params.id);
 		await db.update(family).set({ status: 'Approved' }).where(eq(family.id, id));
-		// Also approve all persons?
 		await db.update(person).set({ status: 'Approved' }).where(eq(person.familyId, id));
 		throw redirect(303, '/admin/approval');
 	},

@@ -21,7 +21,6 @@
 
     let searchQuery = $state(data.query || "");
 
-    // Helper to get head of household name
     function getHeadOfHousehold(family: any) {
         const head = family.persons.find(
             (p: any) => p.relationship.toLowerCase() === "head",

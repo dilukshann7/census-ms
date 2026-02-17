@@ -11,12 +11,6 @@ export const load: PageServerLoad = async ({ url }) => {
 	let families;
 	
 	if (query) {
-		// If query provided, search by ID number or phone (person attributes)
-		// Or family whatsapp number
-		// We need to join with person table or use subquery
-		// Since we want to return families, let's find matching families first.
-		
-		// Find person IDs matching the query (nic or phone)
 		const matchingPersons = await db.select({ familyId: personTable.familyId })
 			.from(personTable)
 			.where(or(
@@ -25,9 +19,6 @@ export const load: PageServerLoad = async ({ url }) => {
 				));
 			
 		const familyIds = matchingPersons.map(p => p.familyId);
-		
-		// Also match family whatsapp
-		// But wait, user said "search through the database using the ID number of any person or phone number to view their entire family"
 		
 		if (familyIds.length > 0) {
 			families = await db.query.family.findMany({
@@ -40,7 +31,7 @@ export const load: PageServerLoad = async ({ url }) => {
 					)
 				),
 				with: {
-					persons: true // Fetch persons to display details if needed
+					persons: true 
 				}
 			});
 		} else {
@@ -55,7 +46,6 @@ export const load: PageServerLoad = async ({ url }) => {
 			});
 		}
 	} else {
-		// Default: list pending families
 		families = await db.query.family.findMany({
 			where: eq(family.status, 'Pending'),
 			with: {
@@ -82,7 +72,6 @@ export const actions: Actions = {
 			.set({ status: 'Approved' })
 			.where(eq(family.id, Number(id)));
 
-		// Also approve persons?
 		await db.update(personTable)
 			.set({ status: 'Approved' })
 			.where(eq(personTable.familyId, Number(id)));
