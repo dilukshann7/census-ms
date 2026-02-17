@@ -54,22 +54,8 @@
                 </Button>
                 <div>
                     <h1 class="text-xl font-bold flex items-center gap-2">
-                        Family Details #{data.family.id}
-                        <Badge
-                            variant={data.family.status === "Pending"
-                                ? "secondary"
-                                : data.family.status === "Approved"
-                                  ? "default"
-                                  : "destructive"}
-                        >
-                            {data.family.status}
-                        </Badge>
+                        Family #{data.family.id}
                     </h1>
-                    <p class="text-sm text-muted-foreground">
-                        Created on {new Date(
-                            data.family.createdAt,
-                        ).toLocaleDateString()}
-                    </p>
                 </div>
             </div>
 

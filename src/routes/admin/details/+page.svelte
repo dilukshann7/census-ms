@@ -31,8 +31,12 @@
 >
     <div class="flex items-center justify-between">
         <div>
-            <h2 class="text-3xl font-bold tracking-tight">Family Details</h2>
-            <p class="text-muted-foreground">View approved census records.</p>
+            <h2 class="text-2xl md:text-3xl font-bold tracking-tight">
+                Family Details
+            </h2>
+            <p class="text-sm md:text-base text-muted-foreground">
+                View approved census records.
+            </p>
         </div>
     </div>
 

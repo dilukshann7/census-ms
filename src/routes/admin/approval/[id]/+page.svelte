@@ -53,25 +53,6 @@
                 <Button variant="ghost" size="icon" href="/admin/approval">
                     <ArrowLeft class="w-5 h-5" />
                 </Button>
-                <div>
-                    <h1 class="text-xl font-bold flex items-center gap-2">
-                        Review Submission #{data.family.id}
-                        <Badge
-                            variant={data.family.status === "Pending"
-                                ? "secondary"
-                                : data.family.status === "Approved"
-                                  ? "default"
-                                  : "destructive"}
-                        >
-                            {data.family.status}
-                        </Badge>
-                    </h1>
-                    <p class="text-sm text-muted-foreground">
-                        Submitted on {new Date(
-                            data.family.createdAt,
-                        ).toLocaleDateString()}
-                    </p>
-                </div>
             </div>
 
             <div class="flex items-center gap-2">

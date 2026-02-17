@@ -6,10 +6,11 @@
 
 <div class="min-h-screen bg-muted/40">
 	<header class="border-b bg-background/90 backdrop-blur-sm">
-		<div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 md:px-6">
+		<div
+			class="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 md:px-6"
+		>
 			<div>
-				<h1 class="text-lg font-semibold">Admin Console</h1>
-				<p class="text-sm text-muted-foreground">{data.authUser.email}</p>
+				<h1 class="text-lg font-semibold">Admin</h1>
 			</div>
 
 			<div class="flex items-center gap-2">
