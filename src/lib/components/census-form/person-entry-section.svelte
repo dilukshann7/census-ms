@@ -318,7 +318,7 @@
                             id="person-phone-{i}"
                             type="tel"
                             bind:value={$formData.persons[i].telephoneNumber}
-                            placeholder="e.g. +94 77 123 4567"
+                            placeholder="e.g. 0771234567"
                         />
                     </div>
                 </div>
