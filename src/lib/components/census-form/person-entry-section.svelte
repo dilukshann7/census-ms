@@ -84,6 +84,11 @@
       (_: unknown, i: number) => i !== index,
     );
   }
+
+  function normalizeOption(value: string | undefined) {
+    if (!value) return "";
+    return value.toString().trim().replace(/\s+/g, "_").toLowerCase();
+  }
 </script>
 
 <div class="space-y-6">
@@ -310,7 +315,9 @@
                   <span data-slot="select-value">
                     {$formData.persons[i].occupation
                       ? $t(
-                          `options.occupation.${$formData.persons[i].occupation}`,
+                          `options.occupation.${normalizeOption(
+                            $formData.persons[i].occupation,
+                          )}`,
                         )
                       : $t("common.select")}
                   </span>
