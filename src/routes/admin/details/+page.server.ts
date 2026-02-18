@@ -10,7 +10,6 @@ export const load: PageServerLoad = async ({ url }) => {
 	let families;
 	
 	if (query) {
-		// Search approved families by attributes
 		const matchingPersons = await db.select({ familyId: personTable.familyId })
 			.from(personTable)
 			.where(or(
@@ -46,7 +45,6 @@ export const load: PageServerLoad = async ({ url }) => {
 			});
 		}
 	} else {
-		// Default: list all approved families
 		families = await db.query.family.findMany({
 			where: eq(family.status, 'Approved'),
 			with: {
